@@ -1,4 +1,4 @@
-def call(String repoName) {
+def call() {
     Random random = new Random()
     number = random.nextInt()
 
