@@ -1,4 +1,5 @@
 def call() {
+    echo currentBuild.result
     switch(currentBuild.result){
         case "SUCCESS":
             echo "success"
