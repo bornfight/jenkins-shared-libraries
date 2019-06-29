@@ -14,7 +14,7 @@ def call(String env, String branch, String tag, String[][] configs, String sshAg
     echo tag
     echo configs[0][0]
     echo sshAgentId
-    currentBuild.result = 'ABORTED'
+    currentBuild.result = 'FAILURE'
 }
 
 static boolean isUndefined(String var){
