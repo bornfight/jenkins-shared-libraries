@@ -2,13 +2,13 @@ def call(String env, String branch, String tag, String[][] configs, String sshAg
     env = isUndefined(env) ? "integration" : env
 
     if(env == "integration" && branch != "master"){
-        currentBuild.result = "ABORTED"
+        currentBuild.result = "SKIP"
         return
     }
 
     if(!isUndefined(tag) && env == "integration"){
         currentBuild.result = "ABORTED"
-        error('Aborting first tag build due to undefined stage')
+        return
     }
 
 
@@ -17,8 +17,7 @@ def call(String env, String branch, String tag, String[][] configs, String sshAg
     echo tag
     echo configs[0][0]
     echo sshAgentId
-    currentBuild.result = "ABORTED"
-    error('Aborting first tag build due to undefined stage')
+    currentBuild.result = "SKIP"
 }
 
 static boolean isUndefined(String var){
