@@ -3,7 +3,15 @@ import org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile
 
 def call(String env, String[][] configs, String[] sshAgentIds) {
     env = isUndefined(env) ? "integration" : env
-    sh 'printenv'
+
+    int buildNumber = Integer.parseInt("${env.BUILD_NUMBER}")
+    String buildTag = "${env.TAG_NAME}"
+    echo "$buildNumber"
+    echo "$buildTag"
+    if(buildNumber == 1 && !isUndefined(buildTag)){
+        currentBuild.result = 'ABORTED'
+        error('Aborting first tag build due to undefined stage')
+    }
 
     configFileProvider(prepareConfigProviderArguments(configs)) {
         sshagent([prepareSshAgentArguments(sshAgentIds)]) {
