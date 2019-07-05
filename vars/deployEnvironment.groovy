@@ -1,3 +1,6 @@
+@Library('config-file-provider-plugin')
+import org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile
+
 def call(String env, String[][] configs, String[] sshAgentIds) {
     env = isUndefined(env) ? "integration" : env
 
