@@ -8,7 +8,7 @@ def call(String env, String[][] configs, String[] sshAgentIds) {
     echo sshAgents
 
 
-    configFileProvider([prepareConfigProviderArguments(configs)]) {
+    configFileProvider(["${configArgument}"]) {
         sshagent([prepareSshAgentArguments(sshAgentIds)]) {
             echo "Deploy ${env}"
         }
@@ -20,7 +20,7 @@ static boolean isUndefined(String var) {
 }
 
 static String prepareConfigProviderArguments(String[][] configs) {
-    StringBuilder arguments = new StringBuilder();
+    StringBuilder arguments = new StringBuilder()
 
     for (int i = 0; i < configs.length; i++) {
         arguments.append("configFile(fileId: '" + configs[i][0] + "', targetLocation: '" + configs[i][1] + "')")
@@ -29,7 +29,7 @@ static String prepareConfigProviderArguments(String[][] configs) {
         }
     }
 
-    return arguments.toString();
+    return arguments.toString()
 }
 
 static String prepareSshAgentArguments(String[] sshAgentIds) {
