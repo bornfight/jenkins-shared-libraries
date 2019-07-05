@@ -7,6 +7,7 @@ def call(String env, String[][] configs, String[] sshAgentIds) {
     String sshAgents = prepareSshAgentArguments(sshAgentIds)
     echo sshAgents
 
+    ManagedFile mf = new ManagedFile("asd")
 
     configFileProvider(["${configArgument}"]) {
         sshagent([prepareSshAgentArguments(sshAgentIds)]) {
