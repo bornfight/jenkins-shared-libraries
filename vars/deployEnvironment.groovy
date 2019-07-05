@@ -1,4 +1,4 @@
-@Library('config-file-provider-plugin')
+@Grab(group='org.jenkins-ci.plugins', module='plugin', version='1.411', type='pom')
 import org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile
 
 def call(String env, String[][] configs, String[] sshAgentIds) {
