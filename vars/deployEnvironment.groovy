@@ -4,15 +4,15 @@ import org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile
 def call(String env, String[][] configs, String[] sshAgentIds) {
     env = isUndefined(env) ? "integration" : env
 
-    String configArgument = prepareConfigProviderArguments(configs)
-    echo configArgument
+    List<ManagedFile> configArgument = prepareConfigProviderArguments(configs)
+    for(ManagedFile mf : configArgument){
+        mf.toString()
+    }
 
     String sshAgents = prepareSshAgentArguments(sshAgentIds)
     echo sshAgents
 
-    ManagedFile mf = new ManagedFile("asd")
-
-    configFileProvider(["${configArgument}"]) {
+    configFileProvider(prepareConfigProviderArguments(configs)) {
         sshagent([prepareSshAgentArguments(sshAgentIds)]) {
             echo "Deploy ${env}"
         }
@@ -23,17 +23,14 @@ static boolean isUndefined(String var) {
     return var == null || var.trim().isEmpty() || var.trim() == "null"
 }
 
-static String prepareConfigProviderArguments(String[][] configs) {
-    StringBuilder arguments = new StringBuilder()
+static List<ManagedFile> prepareConfigProviderArguments(String[][] configs) {
+    List<ManagedFile> configFileProviderArgs = new ArrayList<>(configs.length)
 
     for (int i = 0; i < configs.length; i++) {
-        arguments.append("configFile(fileId: '" + configs[i][0] + "', targetLocation: '" + configs[i][1] + "')")
-        if (i < configs.length - 1) {
-            arguments.append(", ")
-        }
+        configFileProviderArgs.add(new ManagedFile(configs[i][0], configs[i][1], null))
     }
 
-    return arguments.toString()
+    return configFileProviderArgs
 }
 
 static String prepareSshAgentArguments(String[] sshAgentIds) {
