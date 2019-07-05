@@ -3,14 +3,7 @@ import org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile
 
 def call(String env, String[][] configs, String[] sshAgentIds) {
     env = isUndefined(env) ? "integration" : env
-
-    List<ManagedFile> configArgument = prepareConfigProviderArguments(configs)
-    for(ManagedFile mf : configArgument){
-        mf.toString()
-    }
-
-    String sshAgents = prepareSshAgentArguments(sshAgentIds)
-    echo sshAgents
+    sh 'printenv'
 
     configFileProvider(prepareConfigProviderArguments(configs)) {
         sshagent([prepareSshAgentArguments(sshAgentIds)]) {
