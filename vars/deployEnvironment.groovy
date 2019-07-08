@@ -1,19 +1,22 @@
 @Grab(group='org.jenkins-ci.plugins', module='plugin', version='1.411', type='pom')
 import org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile
 
-def call(String env, String[][] configs, String[] sshAgentIds) {
-    env = isUndefined(env) ? "integration" : env
+def call(String environment, String[][] configs, String[] sshAgentIds) {
+    echo "Deploy ${environment}"
+    environment = isUndefined(environment) ? "integration" : environment
 
     int buildNumber = Integer.parseInt("${BUILD_NUMBER}")
+    echo "build number: ${buildNumber}"
     String buildTag = "${TAG_NAME}"
+    echo "build tag: ${buildTag}"
 
     if(buildNumber == 1 && !isUndefined(buildTag)){
-        env = "staging"
+        environment = "staging"
     }
 
     configFileProvider(prepareConfigProviderArguments(configs)) {
         sshagent(prepareSshAgentArguments(sshAgentIds)) {
-            sh "vendor/bin/dep -vvv -p deploy ${env}"
+            sh "vendor/bin/dep -vvv -p deploy ${environment}"
         }
     }
 }
