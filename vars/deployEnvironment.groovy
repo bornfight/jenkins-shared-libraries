@@ -6,8 +6,7 @@ def call(String env, String[][] configs, String[] sshAgentIds) {
 
     int buildNumber = Integer.parseInt("${BUILD_NUMBER}")
     String buildTag = "${TAG_NAME}"
-    echo "$buildNumber"
-    echo "$buildTag"
+
     if(buildNumber == 1 && !isUndefined(buildTag)){
         currentBuild.result = 'ABORTED'
         error('Aborting first tag build due to undefined stage')
@@ -34,15 +33,6 @@ static List<ManagedFile> prepareConfigProviderArguments(String[][] configs) {
     return configFileProviderArgs
 }
 
-static String prepareSshAgentArguments(String[] sshAgentIds) {
-    StringBuilder arguments = new StringBuilder()
-
-    for (int i = 0; i < sshAgentIds.length; i++) {
-        arguments.append("'" + sshAgentIds[i] + "'")
-        if (i < sshAgentIds.length - 1) {
-            arguments.append(", ")
-        }
-    }
-
-    return arguments.toString()
+static List<String> prepareSshAgentArguments(String[] sshAgentIds) {
+    return Arrays.asList(sshAgentIds)
 }
