@@ -7,10 +7,12 @@ def call(String environment, String[][] configs, String[] sshAgentIds) {
     try {
         buildTag = "${TAG_NAME}"
     }catch(MissingPropertyException ignored){
+        echo "b tag catch: ${buildTag}"
         buildTag = ""
     }
 
     environment = isUndefined(environment) || isUndefined(buildTag) ? "integration" : environment
+    echo "b tag: ${buildTag}"
 
     if(buildNumber == 1 && !isUndefined(buildTag)){
         environment = "staging"
