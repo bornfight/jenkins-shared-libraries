@@ -2,18 +2,16 @@
 import org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile
 
 def call(String environment, String[][] configs, String[] sshAgentIds) {
-    echo "Deploy ${environment}"
-    environment = isUndefined(environment) ? "integration" : environment
-
     int buildNumber = Integer.parseInt("${BUILD_NUMBER}")
-    echo "build number: ${buildNumber}"
     String buildTag = "${TAG_NAME}"
-    echo "build tag: ${buildTag}"
+    environment = isUndefined(environment) || isUndefined(buildTag) ? "integration" : environment
 
     if(buildNumber == 1 && !isUndefined(buildTag)){
+
         environment = "staging"
     }
 
+    echo "Deploy ${environment}"
     configFileProvider(prepareConfigProviderArguments(configs)) {
         sshagent(prepareSshAgentArguments(sshAgentIds)) {
             sh "vendor/bin/dep -vvv -p deploy ${environment}"
