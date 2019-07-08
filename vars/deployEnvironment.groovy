@@ -3,11 +3,14 @@ import org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile
 
 def call(String environment, String[][] configs, String[] sshAgentIds) {
     int buildNumber = Integer.parseInt("${BUILD_NUMBER}")
-    String buildTag = "${TAG_NAME}"
+    String buildTag = ""
+    try {
+        buildTag = "${TAG_NAME}"
+    }catch(MissingPropertyException ignored){}
+
     environment = isUndefined(environment) || isUndefined(buildTag) ? "integration" : environment
 
     if(buildNumber == 1 && !isUndefined(buildTag)){
-
         environment = "staging"
     }
 
