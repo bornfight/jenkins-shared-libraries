@@ -6,7 +6,9 @@ def call(String environment, String[][] configs, String[] sshAgentIds) {
     String buildTag = ""
     try {
         buildTag = "${TAG_NAME}"
-    }catch(MissingPropertyException ignored){}
+    }catch(MissingPropertyException ignored){
+        buildTag = ""
+    }
 
     environment = isUndefined(environment) || isUndefined(buildTag) ? "integration" : environment
 
