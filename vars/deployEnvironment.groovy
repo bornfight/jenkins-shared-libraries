@@ -2,32 +2,12 @@
 import org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile
 
 def call(String environment, String[][] configs, String[] sshAgentIds) {
-    int buildNumber = Integer.parseInt("${BUILD_NUMBER}")
-    String buildTag = ""
-    try {
-        buildTag = "${TAG_NAME}"
-    }catch(MissingPropertyException ignored){
-        echo "b tag catch: ${buildTag}"
-        buildTag = ""
-    }
-
-    environment = isUndefined(environment) || isUndefined(buildTag) ? "integration" : environment
-    echo "b tag: ${buildTag}"
-
-    if(buildNumber == 1 && !isUndefined(buildTag)){
-        environment = "staging"
-    }
-
     echo "Deploy ${environment}"
     configFileProvider(prepareConfigProviderArguments(configs)) {
         sshagent(prepareSshAgentArguments(sshAgentIds)) {
             sh "vendor/bin/dep -vvv -p deploy ${environment}"
         }
     }
-}
-
-static boolean isUndefined(String var) {
-    return var == null || var.trim().isEmpty() || var.trim() == "null"
 }
 
 static List<ManagedFile> prepareConfigProviderArguments(String[][] configs) {
