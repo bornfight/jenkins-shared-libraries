@@ -15,7 +15,7 @@ def call(String environment) {
         environment = "staging"
     }
     echo "end env: ${environment}"
-    return environment
+    return "st"
 }
 
 static boolean isUndefined(String var) {
