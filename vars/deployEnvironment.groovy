@@ -8,8 +8,7 @@ def call(String env, String[][] configs, String[] sshAgentIds) {
     String buildTag = "${TAG_NAME}"
 
     if(buildNumber == 1 && !isUndefined(buildTag)){
-        currentBuild.result = 'ABORTED'
-        error('Aborting first tag build due to undefined stage')
+        env = "staging"
     }
 
     configFileProvider(prepareConfigProviderArguments(configs)) {
