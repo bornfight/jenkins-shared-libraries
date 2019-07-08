@@ -13,7 +13,7 @@ def call(String env, String[][] configs, String[] sshAgentIds) {
 
     configFileProvider(prepareConfigProviderArguments(configs)) {
         sshagent(prepareSshAgentArguments(sshAgentIds)) {
-            echo "Deploy ${env}"
+            sh "vendor/bin/dep -vvv -p deploy ${env}"
         }
     }
 }
