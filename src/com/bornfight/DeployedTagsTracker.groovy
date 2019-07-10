@@ -23,7 +23,7 @@ class DeployedTagsTracker implements Serializable{
         // Load client secrets.
         InputStream is = new FileInputStream(path + "/" + CREDENTIALS_FILE_PATH);
         if (is == null) {
-            throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
+            throw new FileNotFoundException("Resource not found: " + path + "/" + CREDENTIALS_FILE_PATH);
         }
         return GoogleCredential.fromStream(is).createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS));
     }
