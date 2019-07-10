@@ -19,9 +19,9 @@ class DeployedTagsTracker implements Serializable{
     private final String CREDENTIALS_FILE_PATH = "credentials.json";
     private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-    private def getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
+    private def getCredentials(final NetHttpTransport HTTP_TRANSPORT, String credentials) throws IOException {
         // Load client secrets.
-        InputStream is = new FileInputStream(CREDENTIALS_FILE_PATH);
+        InputStream is = new ByteArrayInputStream(credentials.getBytes())
         if (is == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
@@ -32,7 +32,7 @@ class DeployedTagsTracker implements Serializable{
         System.println(project)
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         final String range = "DeploymentTracker!A2:C";
-        Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+        Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, project))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
