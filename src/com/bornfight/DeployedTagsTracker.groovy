@@ -31,7 +31,7 @@ class DeployedTagsTracker implements Serializable{
     def update(String sheetId, String project, String stage, String tag){
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         final String range = "DeploymentTracker!A2:C";
-        Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, project))
+        Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, project.trim()))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
