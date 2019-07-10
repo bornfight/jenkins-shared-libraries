@@ -21,6 +21,7 @@ class DeployedTagsTracker implements Serializable{
 
     private def getCredentials(final NetHttpTransport HTTP_TRANSPORT, String credentials) throws IOException {
         // Load client secrets.
+        echo credentials
         InputStream is = new ByteArrayInputStream(credentials.getBytes())
         if (is == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
