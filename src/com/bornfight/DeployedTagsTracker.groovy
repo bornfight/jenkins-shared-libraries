@@ -11,7 +11,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets
 import com.google.api.services.sheets.v4.SheetsScopes
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
-import com.google.api.services.sheets.v4.model.ValueRange;
+import com.google.api.services.sheets.v4.model.ValueRange
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
 class DeployedTagsTracker implements Serializable{
 
@@ -21,8 +22,7 @@ class DeployedTagsTracker implements Serializable{
 
     private def getCredentials(final NetHttpTransport HTTP_TRANSPORT, String path) throws IOException {
         // Load client secrets.
-        String abspath  = path + "/" + CREDENTIALS_FILE_PATH
-        InputStream is = new FileInputStream(abspath)
+        InputStream is = new ByteArrayInputStream(path.getBytes())
         return GoogleCredential.fromStream(is).createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS));
     }
 
