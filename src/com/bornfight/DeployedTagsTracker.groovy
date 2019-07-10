@@ -21,7 +21,8 @@ class DeployedTagsTracker implements Serializable{
 
     private def getCredentials(final NetHttpTransport HTTP_TRANSPORT, String path) throws IOException {
         // Load client secrets.
-        InputStream is = new FileInputStream(path + "/" + CREDENTIALS_FILE_PATH);
+        String abspath  = path + "/" + CREDENTIALS_FILE_PATH
+        InputStream is = new FileInputStream(abspath)
         return GoogleCredential.fromStream(is).createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS));
     }
 
