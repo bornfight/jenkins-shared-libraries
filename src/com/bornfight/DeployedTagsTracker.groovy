@@ -1,3 +1,7 @@
+package com.bornfight
+
+@Grab(group='com.google.api-client', module='google-api-client', version='1.30.1')
+
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
