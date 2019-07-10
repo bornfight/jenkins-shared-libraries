@@ -13,11 +13,13 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 
 class DeployedTagsTracker implements Serializable{
 
+    private static final String APPLICATION_NAME = "DeployedTagsTracker";
     private static final String CREDENTIALS_FILE_PATH = "credentials.json";
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
     private static def getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
-        InputStream is = SheetsQuickstart.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream is = DeployedTagsTracker.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (is == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
