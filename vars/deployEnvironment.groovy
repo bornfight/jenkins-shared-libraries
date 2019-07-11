@@ -3,9 +3,15 @@ import org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile
 
 def call(String environment, String[][] configs, String[] sshAgentIds) {
     echo "Deploy ${environment}"
-    configFileProvider(prepareConfigProviderArguments(configs)) {
+    if(configs == null){
         sshagent(prepareSshAgentArguments(sshAgentIds)) {
             sh "vendor/bin/dep -vvv -p deploy ${environment}"
+        }
+    } else {
+        configFileProvider(prepareConfigProviderArguments(configs)) {
+            sshagent(prepareSshAgentArguments(sshAgentIds)) {
+                sh "vendor/bin/dep -vvv -p deploy ${environment}"
+            }
         }
     }
 }
