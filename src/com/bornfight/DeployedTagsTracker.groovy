@@ -22,42 +22,42 @@ class DeployedTagsTracker implements Serializable{
     private def getCredentials(final NetHttpTransport HTTP_TRANSPORT, String credentials) throws IOException {
         // Load client secrets.
         InputStream is = new ByteArrayInputStream(credentials.getBytes())
-        return GoogleCredential.fromStream(is).createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS));
+        return GoogleCredential.fromStream(is).createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS))
     }
 
     def update(String sheetId, String credentials, String name, String stage, String tag){
         if(isUndefined(tag)) return
 
-        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        final String range = "DeploymentTracker!A2:C";
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport()
+        final String range = "DeploymentTracker!A2:C"
         int stageIndex = stage == "staging" ? 1 : 2
 
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, credentials.trim()))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-        ValueRange currentState = service.spreadsheets().values().get(sheetId, range).execute();
+        ValueRange currentState = service.spreadsheets().values().get(sheetId, range).execute()
 
-        ValueRange newState = currentState.clone();
+        ValueRange newState = currentState.clone()
 
-        prepareState(currentState);
-        List<Object> projectRow = findRow(name, currentState);
+        prepareState(currentState)
+        List<Object> projectRow = findRow(name, currentState)
 
         if(projectRow == null){
-            projectRow = createNewRow();
-            projectRow.set(0, name);
-            currentState.getValues().add(projectRow);
+            projectRow = createNewRow()
+            projectRow.set(0, name)
+            currentState.getValues().add(projectRow)
         }
         projectRow.set(stageIndex, tag);
-        newState.setValues(currentState.getValues());
+        newState.setValues(currentState.getValues())
 
-        ValueRange body = new ValueRange().setValues(newState.getValues());
+        ValueRange body = new ValueRange().setValues(newState.getValues())
 
         service
-                .spreadsheets()
-                .values()
-                .update(spreadsheetId, range, body)
-                .setValueInputOption("RAW")
-                .execute();
+            .spreadsheets()
+            .values()
+            .update(sheetId, range, body)
+            .setValueInputOption("RAW")
+            .execute()
     }
 
     static boolean isUndefined(String var) {
