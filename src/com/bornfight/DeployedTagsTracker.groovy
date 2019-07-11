@@ -65,6 +65,10 @@ class DeployedTagsTracker implements Serializable{
     }
 
     private static void prepareState(ValueRange state){
+        if(state.getValues() == null){
+            List<List<Object>> row = new ArrayList<>(1)
+            row.add(new ArrayList<>())
+        }
         for(List<Object> row: state.getValues()){
             for(int i = row.size(); i <3; i++){
                 row.add("");
