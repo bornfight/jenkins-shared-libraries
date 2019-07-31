@@ -1,18 +1,15 @@
 def call(String environment) {
     int buildNumber = Integer.parseInt("${BUILD_NUMBER}")
-    String buildTag
 
+    String buildTag
     try {
         buildTag = "${TAG_NAME}"
     } catch (MissingPropertyException ignored) {
         buildTag = ""
     }
 
-    environment = isUndefined(environment) || isUndefined(buildTag) ? "integration" : environment
-
-    if (buildNumber == 1 && !isUndefined(buildTag)) {
-        environment = "staging"
-    }
+    environment = isUndefined(environment) || isUndefined(buildTag) ? "dev" : environment
+    environment = buildNumber == 1 && !isUndefined(buildTag) ? "staging" : environment
 
     return environment
 }
