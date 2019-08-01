@@ -1,5 +1,8 @@
 package com.bornfight.step
 
+@Grab(group = 'com.google.api-client', module = 'google-api-client', version = '1.23.0')
+@Grab(group = 'com.google.apis', module = 'google-api-services-sheets', version = 'v4-rev581-1.25.0')
+@Grab(group = 'com.google.oauth-client', module = 'google-oauth-client-jetty', version = '1.23.0')
 import com.bornfight.util.ProjectNameExtractor
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
