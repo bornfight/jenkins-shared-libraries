@@ -1,8 +1,8 @@
 package com.bornfight.step
 
 class PortFinder {
-    private static final int MAX_PORT_NUMBER = 1025
-    private static final int MIN_PORT_NUMBER = 65535
+    private static final int MAX_PORT_NUMBER = 65535
+    private static final int MIN_PORT_NUMBER = 1025
 
     public int getAvailablePort(){
         this.getAvailablePort(MIN_PORT_NUMBER, MAX_PORT_NUMBER)
@@ -19,6 +19,8 @@ class PortFinder {
 
         Random rand = new Random()
         while(true){
+            System.out.println(lower)
+            System.out.println(upper)
             int port = rand.nextInt(upper-lower) + lower
             ServerSocket ss = null
             DatagramSocket ds = null
