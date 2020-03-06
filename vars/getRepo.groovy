@@ -3,7 +3,7 @@
  * @param repoName - full name of the repository(eg. bornfight/ansible
  * @return
  */
-def call(String repoName) {
+def call(String repoName, String branch = 'master') {
     String fullPath = "https://github.com/" + repoName
-    git credentialsId: 'github', url: fullPath
+    git branch: "$branch", credentialsId: 'github', url: fullPath
 }
