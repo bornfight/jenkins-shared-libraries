@@ -15,7 +15,8 @@ class CodeceptionReport implements Serializable {
 
     void execute() {
         IStepExecutor steps = ContextRegistry.getContext().getStepExecutor()
-
+        
+        steps.sh("touch .env.test.local")
         steps.junit(allowEmpty, testResultsDirPath+"/report.xml")
         steps.publishTestCoverage(targetValues)
         steps.publishTestResults()
