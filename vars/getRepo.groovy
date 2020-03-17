@@ -5,12 +5,12 @@ import com.bornfight.util.PullRequestBuildMatcher
  * @param repoName - full name of the repository(eg. bornfight/ansible
  * @return
  */
-def call(String repoName, String branch = 'master') {
+def call(String repoName, String branch = 'master', String credentialsId = 'github') {
     String fullPath = "https://github.com/" + repoName
     PullRequestBuildMatcher matcher = new PullRequestBuildMatcher()
 
     if(matcher.isPR(branch)){
         branch = "${CHANGE_BRANCH}"
     }
-    git branch: "$branch", credentialsId: 'github', url: fullPath
+    git branch: "$branch", credentialsId: "$credentialsId", url: fullPath
 }
