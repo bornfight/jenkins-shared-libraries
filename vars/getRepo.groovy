@@ -10,7 +10,6 @@ def call(String repoName, String branch = 'master', String credentialsId = 'gith
     if(protocol == 'git'){
         fullPath = "git@github.com:" + repoName
     }
-    String fullPath = "https://github.com/" + repoName
     PullRequestBuildMatcher matcher = new PullRequestBuildMatcher()
 
     if(matcher.isPR(branch)){
