@@ -2,10 +2,11 @@ import com.bornfight.context.ContextRegistry
 
 import java.text.SimpleDateFormat
 
-def call() {
+def call(String timezone="UTC") {
     ContextRegistry.registerDefaultContext(this)
 
-    String timeStamp = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date())
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss")
+    sdf.setTimeZone(TimeZone.getTimeZone(timezone))
 
-    return timeStamp
+    return sdf.format(new Date())
 }
